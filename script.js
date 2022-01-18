@@ -1,5 +1,6 @@
 const itemProduct = document.querySelector('.items');
 const listCartItems = document.querySelector('.cart__items');
+const totalInCart = document.querySelector('.total__in__cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -27,12 +28,26 @@ function createProductItemElement({ sku, name, image }) {
   return section;
 }
 
+function calculateTotal() {
+  const cartItems = JSON.parse(getSavedCartItems());
+  const total = cartItems.reduce((accumulator, item) => accumulator + item.salePrice, 0);
+  console.log(total);
+  totalInCart.innerText = `${total}`;
+
+}
+
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
 
 function cartItemClickListener(event) {
+  const cartItems = JSON.parse(getSavedCartItems());
+  const [, sku] = event.target.innerText.split(' ');
+
+  saveCartItems(cartItems.filter((item) => item.sku !== sku));
+
   event.target.remove();
+  calculateTotal();
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -71,6 +86,7 @@ function loadStorage() {
       const productItem = createCartItemElement(item);
       listCartItems.appendChild(productItem);
     });
+    calculateTotal();
   }
 }
 
@@ -85,6 +101,7 @@ async function addToCart(id) {
   const productAdded = createCartItemElement(productToCart);
   listCartItems.appendChild(productAdded);
   verifyStorage(productToCart);
+  calculateTotal();
 }
 
 itemProduct.addEventListener('click', (event) => {
@@ -97,6 +114,7 @@ async function init() {
   const resultFetch = await fetchProducts('computador');
   cardItem(resultFetch);
   loadStorage();
+  calculateTotal();
 }
 
 window.onload = () => { init(); };
