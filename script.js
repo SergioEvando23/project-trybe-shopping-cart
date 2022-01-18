@@ -1,6 +1,7 @@
 const itemProduct = document.querySelector('.items');
 const listCartItems = document.querySelector('.cart__items');
 const totalInCart = document.querySelector('.total__in__cart');
+const cleanCart = document.querySelector('.empty-cart');
 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
@@ -29,7 +30,7 @@ function createProductItemElement({ sku, name, image }) {
 }
 
 function calculateTotal() {
-  const cartItems = JSON.parse(getSavedCartItems());
+  const cartItems = JSON.parse(getSavedCartItems()) || [];
   const total = cartItems.reduce((accumulator, item) => accumulator + item.salePrice, 0);
   console.log(total);
   totalInCart.innerText = `${total}`;
@@ -89,6 +90,12 @@ function loadStorage() {
     calculateTotal();
   }
 }
+
+cleanCart.addEventListener('click', () => {
+  localStorage.removeItem('cartItems');
+  calculateTotal();
+  listCartItems.innerHTML = '';
+});
 
 async function addToCart(id) {
   const itemFetch = await fetchItem(id);
