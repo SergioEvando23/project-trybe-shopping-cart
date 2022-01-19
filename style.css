@@ -5,6 +5,14 @@
   padding: 0;
 }
 
+*::-webkit-scrollbar {
+  width: 6px;               
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgb(3, 52, 45);       
+}
+
 body {
   background-color: rgb(246, 246, 246);
 }
@@ -133,6 +141,7 @@ body {
   flex-flow: column wrap;
   background-color: rgb(241, 241, 238);
   height: 100vh;
+  padding: 10px;
 }
 
 .cart .cart__items {
@@ -146,4 +155,10 @@ body {
   margin: 0 auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
+}
+
+.cart__item {
+  margin: 25px;
+  font-weight: 300;
+  font-size: 15px;
 }
