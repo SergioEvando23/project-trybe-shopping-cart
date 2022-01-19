@@ -116,8 +116,24 @@ itemProduct.addEventListener('click', (event) => {
   }
 });
 
+function loading(boolean) {
+  const tagP = document.createElement('p');
+  tagP.className = 'loading';
+  if (boolean) {
+    tagP.innerText = 'Carregando...';
+    tagP.style.fontSize = '30px';
+    tagP.style.fontWeight = '700';
+    tagP.style.color = '#006450';
+    itemProduct.appendChild(tagP);
+  } else {
+    itemProduct.removeChild(document.querySelector('.loading'));
+  }
+}
+
 async function init() {
+  loading(true);
   const resultFetch = await fetchProducts('computador');
+  loading(false);
   cardItem(resultFetch);
   loadStorage();
   calculateTotal();
