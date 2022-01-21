@@ -133,8 +133,9 @@ function loading(boolean) {
 async function init() {
   loading(true);
   const resultFetch = await fetchProducts('computador');
+  const arrayItemsResultFetch = resultFetch.results;
   loading(false);
-  cardItem(resultFetch);
+  cardItem(arrayItemsResultFetch);
   loadStorage();
   calculateTotal();
 }
