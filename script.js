@@ -32,7 +32,6 @@ function createProductItemElement({ sku, name, image }) {
 function calculateTotal() {
   const cartItems = JSON.parse(getSavedCartItems()) || [];
   const total = cartItems.reduce((accumulator, item) => accumulator + item.salePrice, 0);
-  console.log(total);
   totalInCart.innerText = `${total}`;
 }
 
